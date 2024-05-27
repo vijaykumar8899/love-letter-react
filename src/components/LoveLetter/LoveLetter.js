@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import "./LoveLetter.css";
 import audioFile from "./kushi.mp3";
 
@@ -7,11 +8,16 @@ const LoveLetter = () => {
   const [isFullSize, setIsFullSize] = useState(false);
   const audioRef = useRef(null);
 
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const boyName = searchParams.get("boyName") || "DefaultBoy";
+  const girlName = searchParams.get("girlName") || "DefaultGirl";
+
   const handleOpenLetter = () => {
     setIsOpen(true);
     setTimeout(() => {
       setIsFullSize(true);
-      // Ensuring audio play is directly a result of this user interaction
       if (audioRef.current) {
         audioRef.current
           .play()
@@ -43,11 +49,11 @@ const LoveLetter = () => {
         <br />
         never have i been so blessed as to fall in love with someone as
         wonderful as you...
-        <br />i loveeee youuuu <b className="bold">yashuu</b>:)
+        <br />i loveeee youuuu <b className="bold">{girlName}</b>:)
         <br />
         always yours,
         <br />
-        <b className="bold">@Sai</b>
+        <b className="bold">{boyName}</b>
       </div>
       <audio
         ref={audioRef}
